@@ -30,25 +30,25 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $posts = Product::create($request->all());
+        $products = Product::create($request->all());
 
-        return new ProductResource($posts);
+        return new ProductResource($products);
     }
 
 
     public function update(StoreProductRequest $request, $id)
     {
-        $post = Product::findOrFail($id);
-        $post->update($request->all());
-        return new ProductResource($post);
+        $products = Product::findOrFail($id);
+        $products->update($request->all());
+        return new ProductResource($products);
     }
 
 
     public function destroy($id)
     {
-        $post = Product::find($id);
+        $products = Product::find($id);
 
-        $post->delete();
+        $products->delete();
 
         return response('the product successfully deleted', 200);
     }

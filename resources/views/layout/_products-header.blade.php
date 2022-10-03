@@ -2,7 +2,7 @@
 <header class="max-w-8xl mx-auto  text-center" id="category_header"
 {{-- style="background-color: rgb(2, 2, 19);color:rgb(19, 29, 116)" --}}
 >
-    <h1 class="text-4xl">
+    <h1 class="text-4xl text-red-400">
         Best <span class="text-blue-500"> products in </span> our store
     </h1>
     

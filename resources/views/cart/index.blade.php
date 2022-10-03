@@ -14,7 +14,7 @@
             <tbody class="">
             @foreach($carts as $cart)
                 <tr>
-                    <td scope="col">{{ $cart->post_id }}</td>
+                    <td scope="col">{{ $cart->product_id }}</td>
                     <td>{{ $cart->title }}</td>
                     <td>{{ $cart->price }}</td>
                     <td>{{ $cart->Quality }}</td>

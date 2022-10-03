@@ -20,7 +20,7 @@
                         <div >
                             <form action="/cart" method="post">
                                 @csrf
-                                <input type="hidden" name="post_id" value="{{$product->id}}">
+                                <input type="hidden" name="product_id" value="{{$product->id}}">
                                 <input type="hidden" name="title" value="{{$product->title}}">
                                 <input type="hidden" name="price" value="{{$product->price}}">
                                 {{-- <input type="hidden" name="price" value="{{auth()->id}}"> --}}
