@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePostRequest extends FormRequest
+class StoreProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,10 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required',
             'thumbnail' => 'image',
-            'slug' => ['required', Rule::unique('posts', 'slug')],
+            'slug' => ['required', Rule::unique('products', 'slug')],
             'excerpt' => 'required',
             'body' => 'required',
+            'price' => 'required',
             'category_id' => ['required', Rule::exists('categories', 'id')]
         ];
     }

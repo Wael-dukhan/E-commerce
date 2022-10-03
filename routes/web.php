@@ -1,19 +1,15 @@
 <?php
 
-use App\Models\Post;
-use App\Models\User;
-use App\Models\Category;
-use MailchimpMarketing\ApiClient;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\PostsController;
-use App\Http\Controllers\UsersController;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostCommentsController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
-use App\Http\Controllers\PostCommentsController;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
+use MailchimpMarketing\ApiClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,27 +20,25 @@ use App\Http\Controllers\PostCommentsController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
-Route::get('/', [PostsController::class, 'index'])->name('home');
+Route::get('/', [ProductController::class, 'index'])->name('home');
 // Route Wildcard Constraints
-Route::get('posts/{post:slug}', [PostsController::class, 'show']);
+Route::get('products/{product:slug}', [ProductController::class, 'show']);
 
-Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store']);
+Route::post('products/{product:slug}/comments', [PostCommentsController::class, 'store']);
 
-Route::post('/cart',[CartController::class,"store"]);
-Route::get("/carts",[CartController::class,"index"])->name('cart.index');
-Route::get('/carts/edit',[CartController::class,"edit"]);
-Route::put('/carts/update',[CartController::class,"update"]);
-Route::delete('/carts/destroy',[CartController::class,"destroy"]);
+Route::post('/cart', [CartController::class, "store"]);
+Route::get("/carts", [CartController::class, "index"])->name('cart.index');
+Route::get('/carts/edit', [CartController::class, "edit"]);
+Route::put('/carts/update', [CartController::class, "update"]);
+Route::delete('/carts/destroy', [CartController::class, "destroy"]);
 
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 
-
 Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
 Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
-
 
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
@@ -52,10 +46,7 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 //    'create', 'show', 'edit', 'store', 'destroy'
 //]);
 
-
-
 Route::resource('categories', CategoryController::class);
-
 
 //Route::get('categories/{category:name}', function (Category $category) {
 //    return view('posts.index', [
@@ -67,8 +58,8 @@ Route::resource('categories', CategoryController::class);
 
 ///author/{{ $post->author->id }}
 Route::get('author/{author:username}', function (User $author) {
-    return view('posts.index', [
-        'posts' => $author->posts
+    return view('products.index', [
+        'products' => $author->Products,
 //            ->load(['category', 'author'])
     ]);
 });
@@ -76,25 +67,19 @@ Route::get('author/{author:username}', function (User $author) {
 //programmer.test/users
 //Route::get('users', [UsersController::class, 'index']);
 
+Route::get('admin/products/create', [ProductController::class, 'create'])->middleware('permissions');
 
-
-Route::get('admin/posts/create', [PostsController::class, 'create'])->middleware('permissions');
-
-Route::post('admin/posts', [PostsController::class, 'store'])->middleware('permissions');
-
-
-
-
+Route::post('admin/products', [ProductController::class, 'store'])->middleware('permissions');
 
 Route::get('ping', function () {
     $mailchimp = new ApiClient();
 
     $mailchimp->setConfig([
         'apiKey' => config('services.mailchimp.key'),
-        'server' => 'us11'
+        'server' => 'us12',
     ]);
 
-//    $response = $mailchimp->ping->get();
+   $response = $mailchimp->ping->get();
 //    $response = $mailchimp->lists->getAllLists();
 //    $response = $mailchimp->lists->getList('d42c7aa757');
 
@@ -103,11 +88,8 @@ Route::get('ping', function () {
 //        'status' => 'subscribed',
 //    ]);
 
-
-//    dd($response);
+   dd($response);
 });
-
-
 
 Route::post('newsletter', function () {
 
@@ -117,27 +99,22 @@ Route::post('newsletter', function () {
 
     $mailchimp->setConfig([
         'apiKey' => config('services.mailchimp.key'),
-        'server' => 'us11'
+        'server' => 'us12',
     ]);
+        
+
+    // dd($mailchimp->lists->getAllLists());
 
     try {
-        $response = $mailchimp->lists->addListMember('d42c7aa757', [
+        $response = $mailchimp->lists->addListMember('a0afd04ae4', [
             'email_address' => request('email'),
             'status' => 'subscribed',
         ]);
     } catch (Exception $exception) {
         throw \Illuminate\Validation\ValidationException::withMessages([
-            'email' => 'This email could not be added to our newsletter list.'
+            'email' => 'This email could not be added to our newsletter list.',
         ]);
     }
 
-
     return redirect('/')->with('success', 'You are now signed up for our newsletter');
 });
-
-
-
-
-
-
-

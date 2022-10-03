@@ -5,13 +5,15 @@
         </h1>
 
         <div class="border border-gray-200 p-6 rounded-xl">
-            <form method="POST" action="/admin/posts" enctype="multipart/form-data">
+            <form method="POST" action="/admin/products" enctype="multipart/form-data">
                 @csrf
 
 
                 <x-form.input name="title" />
 
                 <x-form.input name="slug" />
+
+                <x-form.input name="price" />
 
                 <x-form.input name="thumbnail" type="file" />
 

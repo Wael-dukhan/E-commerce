@@ -10,8 +10,8 @@ class cart extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function posts()
+    public function Products()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Product::class);
     }
 }

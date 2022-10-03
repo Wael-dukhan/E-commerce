@@ -1,5 +1,5 @@
 @auth
-    <form method="POST" action="/posts/{{ $post->slug }}/comments" class="border border-gray-200 p-6 rounded-xl">
+    <form method="POST" action="/products/{{ $product->slug }}/comments" class="border border-gray-200 p-6 rounded-xl">
         @csrf
         <header class="flex items-center">
             <img src="https://i.pravatar.cc/60?u={{ request()->user()->id }}" alt="" class="rounded-full">
@@ -7,7 +7,7 @@
         </header>
         <div class="mt-6">
                 <textarea
-                    class="w-full text-sm focus:outline-none focus:ring"
+                    class="w-full text-sm focus:outline-none focus:ring border border-5"
                     name="body"
                     id="body"
                     rows="5"
@@ -25,7 +25,7 @@
             <button
                 type="submit"
                 class="bg-blue-500 text-white uppercase font-semibold text-xs py-2 px-10 rounded-2xl hover:bg-blue-600">
-                Post
+                Add Comment
             </button>
         </div>
 

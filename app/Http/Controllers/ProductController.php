@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
-use App\Models\Post;
+use App\Models\Product;
+use App\Models\User;
+use App\Notifications\PostNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
-class PostsController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,6 +26,7 @@ class PostsController extends Controller
 
         //        dd(Gate::allows('admin'));
 //        dd(auth()->user()->can('admin'));
+            // \request()->user()->can('admin');
 //        dd(\request()->user()->can('author')); // true / false
 //        dd(\request()->user()->cannot('admin'));
 
@@ -46,8 +51,8 @@ class PostsController extends Controller
 //        return Post::latest()->filter(\request(['search', 'category', 'author']))->paginate();
 
 
-        return view('posts.index', [
-            'posts' => Post::latest()->filter(
+        return view('products.index', [
+            'products' => Product::latest()->filter(
                 request(['search', 'category', 'author'])
             )->paginate(6)->withQueryString(),
         ]);
@@ -56,21 +61,21 @@ class PostsController extends Controller
 
     public function create()
     {
-       if (auth()->guest()) {
+        if (auth()->guest()) {
         //    abort(403);
-           abort(Response::HTTP_FORBIDDEN);
-           return  redirect('/');
-       }
+            abort(Response::HTTP_FORBIDDEN);
+            return  redirect('/');
+        }
 
-       if (auth()->user()->username !== 'admin') {
-           abort(Response::HTTP_FORBIDDEN);
-       }
+        if (auth()->user()->username !== 'admin') {
+            abort(Response::HTTP_FORBIDDEN);
+        }
 
-        return view('posts.create');
+        return view('products.create');
     }
 
 
-    public function store(StorePostRequest $request)
+    public function store(StoreProductRequest $request)
     {
 //        $path = request()->file('thumbnail')->store('thumbnails');
 //        return 'Done: '.$path;
@@ -89,12 +94,18 @@ class PostsController extends Controller
         $attributes = $request->all();
 
         $attributes['user_id'] = auth()->id();
+        // dd(request()->file('thumbnail'));
         $attributes['thumbnail'] = request()->file('thumbnail')->store("public");
-
-        Post::create($attributes);
-
+        // $extension= $attributes['thumbnail']->getClientOriginalExtension();
+        // $filename=time().'.'.$extension;
+        // $attributes['thumbnail']->move('public/image/',$filename);
+        // dd($attributes['thumbnail']);
+        $postN=Product::create($attributes);
+        // dd($postN);
+        // dd(auth()->user()->name);
+        $userNotifications=User::where('id','!=',auth()->user()->id)->get();
+        Notification::send($userNotifications,new PostNotification($postN->slug,auth()->user()->name,$postN->title));
         return redirect('/');
-
 
         //        Post::create([
 //            'title' => $attributes['title']
@@ -105,11 +116,12 @@ class PostsController extends Controller
 
 
 
-    public function show(Post $post)
+    public function show(Product $product)
     {
+        // DB::table('notifications')->where('data->post_slug',$post->slug)->pluck('id')->update(['read_at'=>now()]);
 //        $post = Post::where('slug', $slug)->first();
-        return view('posts.post', [
-            'post' => $post
+        return view('products.product', [
+            'product' => $product
         ]);
     }
 

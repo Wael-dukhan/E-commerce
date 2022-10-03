@@ -11,9 +11,9 @@ class Comment extends Model
 
     protected $guarded = [];
 
-    public function post()   // post_id
+    public function Product()   // post_id
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function author()  // author_id

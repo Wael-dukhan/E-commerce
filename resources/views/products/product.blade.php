@@ -6,12 +6,12 @@
                     <img src="/images/illustration-1.png" alt="" class="rounded-xl">
 
                     <p class="mt-4 block text-gray-400 text-xs">
-                        Published <time>{{ $post->created_at->diffForHumans() }}</time>
+                        Published <time>{{ $product->created_at->diffForHumans() }}</time>
                     </p>
                     <div class="flex items-center lg:justify-center text-sm mt-4">
-                        <img src="https://i.pravatar.cc/60?u={{ $post->category_id }}" alt="Lary avatar">
+                        <img src="https://i.pravatar.cc/60?u={{ $product->category_id }}" alt="Lary avatar">
                         <div class="ml-3 text-left">
-                            <h5 class="font-bold">{{ $post->author->name }}</h5>
+                            <h5 class="font-bold">{{ $product->author->name }}</h5>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         </a>
 
                         <div class="space-x-2">
-                            <x-category-button :category="$post->category" />
+                            <x-category-button :category="$product->category" />
                         </div>
                     </div>
 
@@ -74,7 +74,7 @@
                         </aside> --}}
                         <main class="col-lg-6">
                           <article class="ps-lg-3">
-                            <h4 class="title text-dark">{{$post->title}}</h4>
+                            <h4 class="title text-dark">{{$product->title}}</h4>
                             <div class="rating-wrap my-3">
                               <ul class="rating-stars">
                                 <li style="width:80%" class="stars-active"> <img src="images/misc/stars-active.svg" alt=""> </li>
@@ -88,11 +88,11 @@
                             </div> <!-- rating-wrap.// -->
                         
                             <div class="mb-3"> 
-                              <var class="price h5">$ {{$post->price}}</var> 
+                              <var class="price h5">$ {{$product->price}}</var> 
                               <span class="text-muted">/per box</span> 
                             </div> 
 
-                            <p>{!!$post->excerpt!!}</p>
+                            <p>{!!$product->excerpt!!}</p>
                         
                             <dl class="row">
                               <dt class="col-6">Type:</dt>
@@ -152,10 +152,10 @@
                     
                 </div>
                 <div class="col-span-4 col-start-5 mt-10 space-y-6">
-                    @include('posts._add-comment-form')
+                    @include('products._add-comment-form')
 
-                    @foreach($post->comments as $comment)
-                        <x-post-comment :comment="$comment" />
+                    @foreach($product->comments as $comment)
+                        <x-product-comment :comment="$comment" />
                     @endforeach
 
                 </div> 

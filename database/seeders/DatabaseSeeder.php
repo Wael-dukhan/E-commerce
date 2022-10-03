@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
-use App\Models\Post;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -51,15 +51,15 @@ class DatabaseSeeder extends Seeder
             'slug'=>'food-store',
         ]);
 
-        Post::factory(10)->create([
+        Product::factory(10)->create([
             'user_id' => $ahmed->id,
             'category_id' => $category->id
         ]);
-        Post::factory(10)->create([
+        Product::factory(10)->create([
             'user_id' => $mohammed->id,
             'category_id' => $category2->id
         ]);
-        Post::factory(10)->create([
+        Product::factory(10)->create([
             'user_id' => $ali->id,
             'category_id' => $category3->id
         ]);
