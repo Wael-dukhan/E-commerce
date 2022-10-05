@@ -7,10 +7,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PostNotification extends Notification
+class ProductNotification extends Notification
 {
     use Queueable;
-    private $post_slug;
+    private $product_slug;
     private $user_create;
     private $title;
     /**
@@ -18,9 +18,9 @@ class PostNotification extends Notification
      *
      * @return void
      */
-    public function __construct($post_slug,$user_create,$title)
+    public function __construct($product_slug,$user_create,$title)
     {
-        $this->post_slug=$post_slug;
+        $this->product_slug=$product_slug;
         $this->user_create=$user_create;
         $this->title=$title;
     }
@@ -59,7 +59,7 @@ class PostNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'post_slug'=>$this->post_slug,
+            'product_slug'=>$this->product_slug,
             'user_create'=>$this->user_create,
             'title'=>$this->title,
         ];

@@ -28,7 +28,7 @@
                     >
                         Category
                     </label>
-
+                    
                     <select name="category_id" id="category_id">
 
                         @foreach(\App\Models\Category::all() as $category)

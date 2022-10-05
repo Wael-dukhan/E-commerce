@@ -57,7 +57,7 @@
                     <img src="https://i.pravatar.cc/60?u={{ $product->category_id }}" alt="Lary avatar">
                     <div class="ml-3" style="font-size: 10%">
                         <h5 class="font-bold">
-                            <a href="/author/{{ $product->author->username }}">
+                            <a href="/?author/{{ $product->author->username }}">
                                 {{ $product->author->name }}
                             </a>
                         </h5>

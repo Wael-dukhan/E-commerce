@@ -21,7 +21,15 @@ class Permissions
         // if (auth()->user()?->username !== 'admin') {
         //     abort(Response::HTTP_FORBIDDEN);
         // }
-
+        if (auth()->guest()) {
+            //    abort(403);
+                abort(Response::HTTP_FORBIDDEN);
+                return  redirect('/');
+            }
+    
+            if (auth()->user()->username !== 'admin') {
+                abort(Response::HTTP_FORBIDDEN);
+            }
         return $next($request);
     }
 }

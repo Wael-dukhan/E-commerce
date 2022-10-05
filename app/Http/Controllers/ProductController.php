@@ -6,11 +6,12 @@ use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
-use App\Notifications\PostNotification;
+use App\Notifications\ProductNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -61,15 +62,15 @@ class ProductController extends Controller
 
     public function create()
     {
-        if (auth()->guest()) {
-        //    abort(403);
-            abort(Response::HTTP_FORBIDDEN);
-            return  redirect('/');
-        }
+        // if (auth()->guest()) {
+        // //    abort(403);
+        //     abort(Response::HTTP_FORBIDDEN);
+        //     return  redirect('/');
+        // }
 
-        if (auth()->user()->username !== 'admin') {
-            abort(Response::HTTP_FORBIDDEN);
-        }
+        // if (auth()->user()->username !== 'admin') {
+        //     abort(Response::HTTP_FORBIDDEN);
+        // }
 
         return view('products.create');
     }
@@ -95,16 +96,20 @@ class ProductController extends Controller
 
         $attributes['user_id'] = auth()->id();
         // dd(request()->file('thumbnail'));
-        $attributes['thumbnail'] = request()->file('thumbnail')->store("public");
+        // Storage::disk('image');
+        $imageName=request()->file('thumbnail')->getClientOriginalName();
+        $FolderName=DB::select("select name from categories where id=(?)",[$request->category_id]);
+        // dd($FolderName[0]->name);
+        $attributes['thumbnail'] = request()->file('thumbnail')->storeAs($FolderName[0]->name,$imageName,'image');
         // $extension= $attributes['thumbnail']->getClientOriginalExtension();
         // $filename=time().'.'.$extension;
         // $attributes['thumbnail']->move('public/image/',$filename);
         // dd($attributes['thumbnail']);
-        $postN=Product::create($attributes);
+        $productN=Product::create($attributes);
         // dd($postN);
         // dd(auth()->user()->name);
         $userNotifications=User::where('id','!=',auth()->user()->id)->get();
-        Notification::send($userNotifications,new PostNotification($postN->slug,auth()->user()->name,$postN->title));
+        Notification::send($userNotifications,new ProductNotification($productN->slug,auth()->user()->name,$productN->title));
         return redirect('/');
 
         //        Post::create([

@@ -121,24 +121,37 @@
                               </div> <!-- col.// -->
                               <div class="col-md-4 col-6 mb-3">
                                 <label class="form-label d-block">Quantity</label>
-                                <div class="input-group input-spinner">
-                                  <button class="btn btn-icon btn-light" type="button"> 
+                                <div class="input-group input-spinner row" style="width: 120%">
+                                  <button  class="btn btn-icon btn-light col-md-4" type="button"> 
                                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#999" viewBox="0 0 24 24">
                                         <path d="M19 13H5v-2h14v2z"></path>
                                       </svg>
                                   </button>
-                                  <input class="form-control text-center" placeholder="" value="14">
-                                  <button class="btn btn-icon btn-light" type="button"> 
+                                  <input class="form-control text-center col-md-4" placeholder="" value="1" style="width: 25%">
+                                  <button class="btn btn-icon btn-light col-md-4" type="button"> 
                                       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#999" viewBox="0 0 24 24">
                                         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
                                       </svg>
                                   </button>
+                                  
                                 </div> <!-- input-group.// -->
                               </div> <!-- col.// -->
                             </div> <!-- row.// -->
+
+                            <div class="btn  btn-primary my-2">
+                              <form action="/cart" method="post">
+                                  @csrf
+                                  <input type="hidden" name="product_id" value="{{$product->id}}">
+                                  <input type="hidden" name="title" value="{{$product->title}}">
+                                  <input type="hidden" name="price" value="{{$product->price}}">
+                                  <button type="submit" class="transition-colors duration-300 text-md font-semibold hover:bg-green-400  " 
+                                  >
+                                  <i class="me-1 fa fa-shopping-basket"></i>Add to cart</button>
+                                </form>
+                              </div>
                         
                             <a href="#" class="btn  btn-warning mx-2"> Buy now </a>
-                            <a href="#" class="btn  btn-primary mx-2"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                            {{-- <a href="#" class="btn  btn-primary mx-2"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a> --}}
                             <a href="#" class="btn  btn-light mx-2"> <i class="me-1 fa fa-heart"></i> Save </a>
                           
                           </article> <!-- product-info-aside .// -->
@@ -147,7 +160,6 @@
                         
                         </div> <!-- container .//  -->
                         </section>
-               
 
                     
                 </div>
@@ -163,5 +175,6 @@
         </main>
 
     </section>
+
 </x-layout>
 

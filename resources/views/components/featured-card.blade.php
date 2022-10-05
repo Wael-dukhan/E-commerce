@@ -3,7 +3,9 @@
     <div class="py-6 px-5 lg:flex">
         <div class="flex-1 lg:mr-8">
 {{--            <img src="{{ asset('storage/'. $post->thumbnail) }}" alt="Blog Post illustration" class="rounded-xl">--}}
-            <img src="https://source.unsplash.com/random?u={{ $product->id }}"
+            {{-- <img src="https://source.unsplash.com/random?u={{ $product->id }}" --}}
+            <img src="{{ asset('images/'.$product->thumbnail) }}"
+
             {{-- "{{url('public/image/'.$product->thumbnail)}}" --}}
             {{-- "{{asset('storage/'. $post->thumbnail)}}"  --}}
             alt="Blog Post illustration" class="rounded-xl" width="90%" height="60%"

@@ -97,7 +97,7 @@ id="html">
                               <div class="col-lg-8 col-sm-8 col-8">
                                 <strong class="text-info">{{$notification->data['user_create']}}</strong>
                                 <div>
-                                  <a href="/posts/{{ $notification->data['post_slug'] }}">{{$notification->data['title']}}</a>
+                                  <a href="/products/{{ $notification->data['product_slug'] }}">{{$notification->data['title']}}</a>
                                 </div>
                                 <small class="text-warning">{{$notification->created_at}}</small>
                               </div>    
