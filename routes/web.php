@@ -33,6 +33,7 @@ Route::get("/carts", [CartController::class, "index"])->name('cart.index');
 Route::get('/carts/edit', [CartController::class, "edit"]);
 Route::put('/carts/update', [CartController::class, "update"]);
 Route::delete('/carts/destroy', [CartController::class, "destroy"]);
+Route::get('/carts/Buy', [CartController::class, "Buy"]);
 
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
@@ -71,7 +72,7 @@ Route::get('admin/products/create', [ProductController::class, 'create'])->middl
 
 Route::post('admin/products', [ProductController::class, 'store'])->middleware('permissions');
 
-Route::get('ping', function () {
+Route::get('/ping', function () {
     $mailchimp = new ApiClient();
 
     $mailchimp->setConfig([
@@ -101,7 +102,7 @@ Route::post('newsletter', function () {
         'apiKey' => config('services.mailchimp.key'),
         'server' => 'us12',
     ]);
-        
+
 
     // dd($mailchimp->lists->getAllLists());
 

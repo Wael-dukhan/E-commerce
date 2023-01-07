@@ -30,7 +30,7 @@ class CartController extends Controller
         return view("cart.edit");
     }
     public function update(Request $request)
-    {   
+    {
                 // {{dd($request);}}
         $cart= cart::find($request->id);
         $cart->Quality=$request->Quality;
@@ -42,5 +42,11 @@ class CartController extends Controller
         // {{dd($request->id);}}
         cart::find(request()->id)->delete();
         return redirect()->route('cart.index')->with('success', 'Cart Deleted Successfully');
+    }
+    public function Buy(Request $request)
+    {
+        // {{dd($request->id);}}
+        // cart::find(request()->id)->delete();
+        return redirect()->route('cart.index')->with('success', 'Cart Buyed Successfully');
     }
 }

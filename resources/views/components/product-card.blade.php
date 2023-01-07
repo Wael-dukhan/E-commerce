@@ -9,9 +9,9 @@
         <div class="mt-8 flex flex-col justify-between">
             <header>
                 <div class="space-x-2">
-                    <x-category-button :category="$product->category" />   
+                    <x-category-button :category="$product->category" />
                 </div>
-                
+
                 <div class="mt-4">
                     <h1 class="text-3xl">
                         <div class="price-wrap">
@@ -26,7 +26,7 @@
                             <input type="hidden" name="price" value="{{$product->price}}">
                             {{-- <input type="hidden" name="price" value="{{auth()->id}}"> --}}
                             {{-- <input type="hidden" name="Quality" value="{{$post->Quality}}"> --}}
-                            <button type="submit" class="transition-colors duration-300 text-md font-semibold bg-blue-400 hover:bg-green-400 rounded-full " 
+                            <button type="submit" class="transition-colors duration-300 text-md font-semibold bg-blue-400 hover:bg-green-400 rounded-full "
                             style="margin-left:50%;padding-left:5%;padding-right: 5%;padding-top: 2%;padding-buttom: 2%;">Add to cart</button>
                         </form>
                     </div>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="/posts/{{ $product->slug }}"
+                    <a href="/products/{{ $product->slug }}"
                        class="transition-colors duration-300 text-xs font-semibold text-blue-600 bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"
                     >
                         Read More
